@@ -37,7 +37,6 @@
 | YearsInCurrentRole | Anos no cargo atual dentro da empresa |
 | YearsSinceLastPromotion | Anos desde a última promoção |
 | YearsWithCurrManager | Anos trabalhando com o gestor atual |
-| AttritionProbability_hidden | Target alvo da probabilidade de atrito (Pode ser utilizado para o treino e teste do modelo) |
 
 
 # 📊 Dicionário de Dados - HR Analytics Employee Attrition

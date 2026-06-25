@@ -9,8 +9,8 @@ O conceito de desbalanceamento **só existe em classificação** — e o motivo 
 O modelo precisa **aprender a distinguir classes**:
 
 ```
-Yes → 13% dos dados  (minoria)
-No  → 87% dos dados  (maioria)
+Yes → 16% dos dados  (minoria)
+No  → 84% dos dados  (maioria)
 ```
 
 Se você treinar assim, o modelo "aprende" que a resposta quase sempre é **No** — porque

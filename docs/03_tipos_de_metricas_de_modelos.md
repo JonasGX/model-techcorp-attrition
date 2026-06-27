@@ -28,4 +28,4 @@
 
 **Quando usar:** É especialmente útil em datasets desbalanceados, pois considera simultaneamente os erros de falsos positivos e falsos negativos. Um modelo só terá um F1-Score alto se apresentar bons valores tanto de Precision quanto de Recall.
 
-## Modelos de Regressão Linear
+

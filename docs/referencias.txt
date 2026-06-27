@@ -1,0 +1,9 @@
+p-value: 
+    -https://medium.com/datapsico/o-que-o-p-valor-significa-2680dc4729e8
+teste U de Mann-Whitney: 
+    - https://www.datacamp.com/pt/tutorial/mann-whitney-u-test
+Feature Engineering: 
+    - https://medium.com/@lainetnr/feature-engineering-transformando-dados-categ%C3%B3ricos-em-dados-num%C3%A9ricos-be704fa8aba1
+    - https://www.corpview.com.br/blog/feature-engineering-o-que-e.html
+Informações sobre dados de RH:
+    - https://www.serasaexperian.com.br/conteudos/analise-de-dados-rh/

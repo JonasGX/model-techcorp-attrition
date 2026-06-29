@@ -1,44 +1,3 @@
-## Metadados do Dataset - RH Analytics
-
-| Coluna | Descrição |
-|---|---|
-| Age | Idade do funcionário |
-| Attrition | Indica se o funcionário saiu da empresa (variável alvo) |
-| BusinessTravel | Frequência de viagens de trabalho |
-| DailyRate | Taxa salarial diária em USD |
-| Department | Departamento em que o funcionário trabalha |
-| DistanceFromHome | Distância da residência ao escritório em km |
-| Education | Nível de escolaridade em escala ordinal de 1 a 5 |
-| EducationField | Área de formação acadêmica |
-| EmployeeCount | Contagem de funcionários, coluna constante sem variabilidade |
-| EmployeeNumber | Identificador único do funcionário |
-| EnvironmentSatisfaction | Satisfação com o ambiente de trabalho em escala de 1 a 4 |
-| Gender | Gênero do funcionário |
-| HourlyRate | Taxa salarial por hora em USD |
-| JobInvolvement | Grau de envolvimento com o trabalho em escala de 1 a 4 |
-| JobLevel | Nível hierárquico do cargo em escala de 1 a 5 |
-| JobRole | Cargo ou função do funcionário |
-| JobSatisfaction | Satisfação com o cargo em escala de 1 a 4 |
-| MaritalStatus | Estado civil do funcionário |
-| MonthlyIncome | Renda mensal em USD |
-| MonthlyRate | Taxa mensal associada ao funcionário em USD |
-| NumCompaniesWorked | Número de empresas anteriores na carreira |
-| Over18 | Indica se o funcionário é maior de 18 anos, coluna constante |
-| OverTime | Indica se o funcionário realiza horas extras |
-| PercentSalaryHike | Percentual de aumento salarial no último ciclo de avaliação |
-| PerformanceRating | Avaliação de desempenho em escala de 1 a 4 |
-| RelationshipSatisfaction | Satisfação com relacionamentos no trabalho em escala de 1 a 4 |
-| StandardHours | Horas padrão de trabalho, coluna constante sem variabilidade |
-| StockOptionLevel | Nível de opções de ações concedidas em escala de 0 a 3 |
-| TotalWorkingYears | Total de anos de experiência profissional acumulados |
-| TrainingTimesLastYear | Número de treinamentos realizados no último ano |
-| WorkLifeBalance | Percepção do equilíbrio entre vida pessoal e profissional em escala de 1 a 4 |
-| YearsAtCompany | Anos de trabalho na empresa atual |
-| YearsInCurrentRole | Anos no cargo atual dentro da empresa |
-| YearsSinceLastPromotion | Anos desde a última promoção |
-| YearsWithCurrManager | Anos trabalhando com o gestor atual |
-
-
 # 📊 Dicionário de Dados - HR Analytics Employee Attrition
 
 ## 📋 Informações Gerais do Dataset
@@ -130,5 +89,62 @@
 | **Campo** | **Tipo** | **Descrição** | **Valores** | **Observações** |
 |-----------|----------|---------------|-------------|-----------------|
 | **Attrition** | String | Se o funcionário deixou a empresa | 'Yes', 'No' | Target - ~16% 'Yes' |
+
+---
+
+## 🛠️ Feature Engineering - Notebook 02
+
+### Resumo das Novas Features
+
+| # | Feature | Tipo | Grupo | Descrição Resumida |
+|---|---|---|---|---|
+| 1 | SatisfactionScore | Numérica contínua | Satisfação | Média geral de satisfação do funcionário |
+| 2 | CriticalSatisfactionFlag | Binária | Satisfação | Indicador de satisfação crítica (≤ 2.0) |
+| 3 | RatioCareerCompany | Numérica contínua | Carreira/Tempo | Proporção da carreira na empresa atual |
+| 4 | RoleStagnation | Numérica contínua | Carreira/Tempo | Proporção de tempo no mesmo cargo |
+| 5 | YearsWithoutPromotion | Numérica contínua | Carreira/Tempo | Proporção de tempo sem promoção |
+| 6 | AgeGroup | Categórica | Carreira/Tempo | Faixa etária (Jovem, Adulto, Senior) |
+| 7 | IncomePerLevel | Numérica contínua | Compensação | Salário por nível hierárquico |
+| 8 | IncomeMedianJob | Numérica contínua | Compensação | Salário vs mediana do cargo |
+| 9 | RiskOvertimeDistance | Numérica contínua | Risco | Interação entre hora extra e distância |
+| 10 | RiskWorklifeOvertime | Numérica contínua | Risco | Interação entre equilíbrio vida-trabalho e hora extra |
+
+
+### 9. Features de Satisfação
+
+| **Campo** | **Tipo** | **Descrição** | **Valores** | **Observações** |
+|-----------|----------|---------------|-------------|-----------------|
+| **SatisfactionScore** | Float | Média de satisfação geral do funcionário calculada a partir de JobSatisfaction, EnvironmentSatisfaction e RelationshipSatisfaction | 1.00 - 4.00 | Média: 2.50. Captura o nível geral de satisfação que nenhuma das três variáveis representa isoladamente |
+| **CriticalSatisfactionFlag** | Integer | Indicador binário de satisfação crítica baseado no SatisfactionScore | 0 ou 1 | 1 se SatisfactionScore ≤ 2.0, senão 0. ~31% dos funcionários em estado crítico |
+
+### 10. Features de Carreira e Tempo
+
+| **Campo** | **Tipo** | **Descrição** | **Valores** | **Observações** |
+|-----------|----------|---------------|-------------|-----------------|
+| **RatioCareerCompany** | Float | Proporção de anos trabalhados na empresa em relação ao total de anos de carreira | 0.00 - 0.97 | Cálculo: YearsAtCompany / (TotalWorkingYears + 1). Valor alto = fez carreira na empresa, mais estável. Valor baixo = passou por muitas empresas |
+| **RoleStagnation** | Float | Proporção de tempo no cargo atual em relação ao tempo total na empresa | 0.00 - 0.95 | Cálculo: YearsInCurrentRole / (YearsAtCompany + 1). Valor próximo de 1.0 = nunca mudou de cargo. Valor baixo = mudou recentemente |
+| **YearsWithoutPromotion** | Float | Proporção de tempo sem promoção em relação ao tempo total na empresa | 0.00 - 0.94 | Cálculo: YearsSinceLastPromotion / (YearsAtCompany + 1). Valor alto = estagnado, possível frustração. Valor baixo = promovido recentemente |
+| **AgeGroup** | String | Faixa etária do funcionário baseada em padrões de comportamento do mercado de trabalho | 'Jovem', 'Adulto', 'Senior' | Jovem ≤ 30 (27,63%), Adulto 31-45 (31,95%), Senior > 45 (40,42%). Jovens tendem a ter mais mobilidade, seniores buscam estabilidade |
+
+### 11. Features de Compensação
+
+| **Campo** | **Tipo** | **Descrição** | **Valores** | **Observações** |
+|-----------|----------|---------------|-------------|-----------------|
+| **IncomePerLevel** | Float | Salário mensal dividido pelo nível hierárquico do funcionário | 200.00 - 19999.00 | Cálculo: MonthlyIncome / JobLevel. Valor baixo = funcionário subvalorizado para o nível que ocupa |
+| **IncomeMedianJob** | Float | Razão entre o salário do funcionário e a mediana salarial do seu cargo | 0.09 - 1.91 | Abaixo de 1.0 = ganha menos que os pares do mesmo cargo. Acima de 1.0 = ganha mais que os pares |
+
+### 12. Features de Risco e Comportamento
+
+| **Campo** | **Tipo** | **Descrição** | **Valores** | **Observações** |
+|-----------|----------|---------------|-------------|-----------------|
+| **RiskOvertimeDistance** | Float | Interação entre fazer hora extra e distância de casa ao trabalho. Captura o acúmulo de desgaste físico e mental | 0.00 - 29.00 | Cálculo: OverTime_encoded × DistanceFromHome. Valor 0 = sem hora extra (independente da distância). Valor alto = faz hora extra e mora longe |
+| **RiskWorklifeOvertime** | Float | Interação entre equilíbrio vida-trabalho ruim e hora extra. Captura o acúmulo de sobrecarga percebida | 0.00 - 4.00 | Cálculo: (5 - WorkLifeBalance) × OverTime_encoded. Valor 4 = risco crítico (equilíbrio péssimo + hora extra). Valor 0 = sem hora extra |
+
+### 13. Variáveis Encoded (versões numéricas)
+
+| **Campo** | **Tipo** | **Descrição** | **Valores** | **Observações** |
+|-----------|----------|---------------|-------------|-----------------|
+| **OverTime_encoded** | Integer | Versão numérica da variável OverTime | 0 ou 1 | 0 = 'No' (não faz hora extra), 1 = 'Yes' (faz hora extra). Criada para possibilitar o cálculo das features RiskOvertimeDistance e RiskWorklifeOvertime |
+| **AttritionFlag** | Integer | Versão numérica da variável alvo Attrition | 0 ou 1 | 0 = 'No' (permaneceu), 1 = 'Yes' (saiu). Criada na EDA para facilitar cálculos estatísticos e de correlação |
 
 ---

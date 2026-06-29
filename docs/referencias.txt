@@ -1,3 +1,5 @@
+modelo de detecção a fraude:
+    - https://www.alura.com.br/curso-online-modelos-preditivos-dados-deteccao-fraude?srsltid=AfmBOooMCj0_JbUnuoX_Uv_wMjqM_gRyMEGZ3jwZNTfn-hY_omxU72rZ
 p-value: 
     -https://medium.com/datapsico/o-que-o-p-valor-significa-2680dc4729e8
 teste U de Mann-Whitney: 
@@ -7,3 +9,7 @@ Feature Engineering:
     - https://www.corpview.com.br/blog/feature-engineering-o-que-e.html
 Informações sobre dados de RH:
     - https://www.serasaexperian.com.br/conteudos/analise-de-dados-rh/
+Pre processamento
+    - https://medium.com/@ingoreichertjr/pr%C3%A9-processamento-de-dados-o-que-%C3%A9-por-que-fazer-dfc9fa3df8a3
+Diferença do X maiusculo e y minusculo na divisão de treino e teste:
+    - https://medium.com/@mohamad.razzi.my/the-meaning-of-capital-x-and-small-y-in-machine-learning-c7f8ac5ffd38
